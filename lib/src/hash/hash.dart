@@ -72,7 +72,7 @@ abstract class _HashBase implements Hash {
   int get elementSizeInBytes => _bytes.elementSizeInBytes;
 
   @override
-  int get lengthInSize => _bytes.lengthInBytes;
+  int get lengthInBytes => _bytes.lengthInBytes;
 
   @override
   int get offsetInBytes => _bytes.offsetInBytes;
