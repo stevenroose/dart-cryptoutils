@@ -1,0 +1,8 @@
+name: cryptoutils
+version: 0.1.0
+author: Steven Roose <stevenroose@gmail.com>
+description: A crypto utility library.
+homepage: github.com/stevenroose/dart-cryptoutils
+dependencies:
+  bignum: '>=0.0.4'
+  collection: any
