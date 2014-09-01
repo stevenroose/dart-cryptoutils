@@ -17,7 +17,7 @@ abstract class Hash implements TypedData {
    */
   int get length;
 
-  BigInteger get asBigInteger;
+  BigInteger asBigInteger();
 
   @override
   ByteBuffer get buffer;
