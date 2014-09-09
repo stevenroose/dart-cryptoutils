@@ -13,7 +13,7 @@ class UnmodifiableUint8List extends Object with _UnmodifiableListMixin<int> impl
   /**
    * Create a new unmodifiable wrapper around a [Uint8List].
    */
-  const UnmodifiableUint8List(Uint8List this._underlyingUint8List);
+  UnmodifiableUint8List(Uint8List this._underlyingUint8List);
 
   /**
    * Instead of just wrapping the object, this factory constructor first
