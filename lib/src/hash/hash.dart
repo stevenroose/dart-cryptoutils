@@ -5,34 +5,40 @@ part of cryptoutils;
  *
  * Constructors take either List<int>'s or Strings.
  */
-abstract class Hash implements TypedData {
+abstract class Hash implements Uint8List {
+
+  /**
+   * Create a new Hash instance.
+   */
+  factory Hash(dynamic content) => new _HashBase(content);
 
   /**
    * The bytes that represent the hash value.
    */
-  List<int> get bytes;
+  List<int> asBytes();
 
   /**
-   * The size of this hash in bytes.
+   * The hash value as a Big Integer.
    */
-  int get length;
-
   BigInteger asBigInteger();
 
-  @override
-  ByteBuffer get buffer;
+  /**
+   * Copy this hash value as a byte list.
+   */
+  List<int> copyAsBytes();
 
-  @override
-  int get elementSizeInBytes;
-
-  @override
-  int get lengthInBytes;
-
-  @override
-  int get offsetInBytes;
+  /**
+   * Copy this hash value as a Big Integer.
+   */
+  BigInteger copyAsBigInteger();
 
   /**
    * Hexadecimal representation of this hash value.
+   */
+  String toHex();
+
+  /**
+   * Same as [toHex()].
    */
   @override
   String toString();
@@ -50,44 +56,55 @@ abstract class Hash implements TypedData {
   int get hashCode;
 }
 
-abstract class _HashBase implements Hash {
+abstract class _HashBase implements Hash  {
 
-  Uint8List _bytes;
+  UnmodifiableUint8List _content;
 
-  @override
-  List<int> get bytes => _bytes;
-
-  @override
-  int get length => _bytes.length;
-
-  @override
-  BigInteger asBigInteger() => new BigInteger.fromBytes(1, _bytes);
-
-  // TypedData methods
-
-  @override
-  ByteBuffer get buffer => _bytes.buffer;
-
-  @override
-  int get elementSizeInBytes => _bytes.elementSizeInBytes;
+  _HashBase(dynamic content) {
+    // convert
+    if(content is String)
+      content = CryptoUtils.hexToBytes(content);
+    else if(content is BigInteger)
+      content = content.toByteArray();
+    // make immutable
+    if(content is UnmodifiableUint8List)
+      _content = content;
+    else if(content is Uint8List)
+      _content = new UnmodifiableUint8List(content);
+    else
+      _content = new UnmodifiableUint8List.fromList(content);
+  }
 
   @override
-  int get lengthInBytes => _bytes.lengthInBytes;
+  List<int> asBytes() => _content;
 
   @override
-  int get offsetInBytes => _bytes.offsetInBytes;
+  BigInteger asBigInteger() => new BigInteger.fromBytes(1, _content);
+
+  @override
+  List<int> copyAsBytes() => new Uint8List.fromList(_content);
+
+  @override
+  BigInteger copyAsBigInteger() => new BigInteger.fromBytes(1, copyAsBytes());
+
+  @override
+  String toHex() => CryptoUtils.bytesToHex(_content);
+
+  @override
+  noSuchMethod(Invocation invocation) => reflect(_content).delegate(invocation);
 
   // Object methods
 
   @override
-  String toString() => CryptoUtils.bytesToHex(bytes);
+  String toString() => toHex();
 
   @override
   bool operator ==(Object other) => other is! Hash ? false :
-      new ListEquality().equals(_bytes, (other as Hash).bytes);
+      new ListEquality().equals(_content, (other as Hash).asBytes());
 
   @override
   int get hashCode {
-    return _bytes[_bytes.length-1] | (_bytes[_bytes.length-2] << 8) | (_bytes[_bytes.length-3] << 16) | (_bytes[_bytes.length-4] << 24);
+    if(_content.length < 4) return new ListEquality().hash(_content);
+    return _content[_content.length-1] ^ (_content[_content.length-2] << 8) ^ (_content[_content.length-3] << 16) ^ (_content[_content.length-4] << 24);
   }
 }
