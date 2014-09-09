@@ -26,10 +26,13 @@ class Base58CheckCodec extends Codec<Base58CheckPayload, String> {
   const Base58CheckCodec(String this.alphabet, Function this.sha256);
 
   @override
-  Converter<Base58CheckPayload, String> get encoder => new Base58CheckEncoder(alphabet, sha256);
+  Converter<Base58CheckPayload, String> get encoder => const Base58CheckEncoder(alphabet, sha256);
 
   @override
-  Converter<String, Base58CheckPayload> get decoder => new Base58CheckDecoder(alphabet, sha256);
+  Converter<String, Base58CheckPayload> get decoder => const Base58CheckDecoder(alphabet, sha256);
+
+  Base58CheckPayload decodeUnchecked(String encoded) =>
+      const Base58CheckDecoder(alphabet, sha256).convertUnchecked(encoded);
 }
 
 class Base58CheckEncoder extends Converter<Base58CheckPayload, String> {

@@ -16,10 +16,10 @@ class Base58Codec extends Codec<List<int>, String> {
   const Base58Codec(String this.alphabet);
 
   @override
-  Converter<List<int>, String> get encoder => new Base58Encoder(alphabet);
+  Converter<List<int>, String> get encoder => const Base58Encoder(alphabet);
 
   @override
-  Converter<String, List<int>> get decoder => new Base58Decoder(alphabet);
+  Converter<String, List<int>> get decoder => const Base58Decoder(alphabet);
 
 }
 
