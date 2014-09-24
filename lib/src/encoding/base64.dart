@@ -10,10 +10,10 @@ class Base64Codec extends Codec<List<int>, String> {
   const Base64Codec([bool this.urlSafe = false, bool addLineSeparator = false]);
 
   @override
-  Converter<List<int>, String> get encoder => const Base64Encoder(urlSafe, addLineSeparator);
+  Converter<List<int>, String> get encoder => new Base64Encoder(urlSafe, addLineSeparator);
 
   @override
-  Converter<String, List<int>> get decoder => const Base64Decoder();
+  Converter<String, List<int>> get decoder => new Base64Decoder();
 
 }
 
