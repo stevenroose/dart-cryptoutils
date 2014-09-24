@@ -1,3 +1,4 @@
+[![Build Status](https://drone.io/github.com/stevenroose/dart-cryptoutils/status.png)](https://drone.io/github.com/stevenroose/dart-cryptoutils/latest)
 
 A small utility library for crypto. It declares a class names `CryptoUtils` which can replace the one in `package:crypto`. It includes the few methods this class provides.
 
