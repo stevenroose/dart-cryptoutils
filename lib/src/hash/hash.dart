@@ -38,6 +38,13 @@ abstract class Hash implements Uint8List {
   String toHex();
 
   /**
+   * Convert to JSON encodable. Returns hex string.
+   *
+   * This method is used by default by dart:convert's JsonEncoder.
+   */
+  toJson();
+
+  /**
    * Same as [toHex()].
    */
   @override
@@ -90,6 +97,9 @@ class _HashBase implements Hash  {
 
   @override
   String toHex() => CryptoUtils.bytesToHex(_content);
+
+  @override
+  toJson() => toHex();
 
   @override
   noSuchMethod(Invocation invocation) => reflect(_content).delegate(invocation);
