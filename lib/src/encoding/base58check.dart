@@ -32,7 +32,7 @@ class Base58CheckCodec extends Codec<Base58CheckPayload, String> {
   Converter<String, Base58CheckPayload> get decoder => new Base58CheckDecoder(alphabet, sha256);
 
   Base58CheckPayload decodeUnchecked(String encoded) =>
-      const Base58CheckDecoder(alphabet, sha256).convertUnchecked(encoded);
+      new Base58CheckDecoder(alphabet, sha256).convertUnchecked(encoded);
 }
 
 class Base58CheckEncoder extends Converter<Base58CheckPayload, String> {

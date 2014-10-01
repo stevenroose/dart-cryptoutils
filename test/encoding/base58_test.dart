@@ -33,5 +33,7 @@ void _testVectors() {
 
 
 void main() {
-  test("base58_bitcoin_vectors", () => _testVectors());
+  group("encoding.base58", () {
+    test("bitcoin_vectors", () => _testVectors());
+  });
 }

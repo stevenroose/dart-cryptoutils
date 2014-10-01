@@ -7,7 +7,7 @@ class Base64Codec extends Codec<List<int>, String> {
   final bool urlSafe;
   final bool addLineSeparator;
 
-  const Base64Codec([bool this.urlSafe = false, bool addLineSeparator = false]);
+  const Base64Codec([bool this.urlSafe = false, bool this.addLineSeparator = false]);
 
   @override
   Converter<List<int>, String> get encoder => new Base64Encoder(urlSafe, addLineSeparator);
@@ -36,7 +36,7 @@ class Base64Encoder extends Converter<List<int>, String> {
   final bool urlSafe;
   final bool addLineSeparator;
 
-  const Base64Encoder([bool this.urlSafe = false, bool addLineSeparator = false]);
+  const Base64Encoder([bool this.urlSafe = false, bool this.addLineSeparator = false]);
 
   static const int _PAD = 61; // '='
   static const int _CR = 13;  // '\r'
