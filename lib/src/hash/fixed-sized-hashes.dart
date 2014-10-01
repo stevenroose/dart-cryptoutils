@@ -1,6 +1,6 @@
 part of cryptoutils;
 
-abstract class _FixedSizeHash extends _HashBase {
+class _FixedSizeHash extends _HashBase {
 
   _FixedSizeHash(dynamic content, int supposedSize) : super(content) {
     // pad the bytes if content was a small BigInteger
