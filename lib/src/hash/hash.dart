@@ -56,7 +56,8 @@ abstract class Hash implements Uint8List {
   int get hashCode;
 }
 
-abstract class _HashBase implements Hash  {
+@proxy
+class _HashBase implements Hash  {
 
   UnmodifiableUint8List _content;
 
