@@ -13,7 +13,7 @@ abstract class CryptoUtils {
    * HEX ENCODING *
    ****************/
 
-  static const String _BYTE_ALPHABET = "0123456789ABCDEF";
+  static const String _BYTE_ALPHABET = "0123456789abcdef";
 
   /**
    * Convert a list of bytes (for example a message digest) into a hex
@@ -32,7 +32,7 @@ abstract class CryptoUtils {
    */
   static List<int> hexToBytes(String hex) {
     hex = hex.replaceAll(" ", "");
-    hex = hex.toUpperCase();
+    hex = hex.toLowerCase();
     if(hex.length % 2 != 0)
       hex = "0" + hex;
     Uint8List result = new Uint8List(hex.length ~/ 2);
