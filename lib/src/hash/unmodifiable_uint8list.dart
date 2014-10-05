@@ -6,7 +6,7 @@ part of cryptoutils;
  *
  * All methods that can modify the list will throw an [UnsupportedError].
  */
-class UnmodifiableUint8List extends Object with _UnmodifiableListMixin<int> implements Uint8List {
+class UnmodifiableUint8List implements Uint8List {
 
   final Uint8List _underlyingUint8List;
 
@@ -24,24 +24,6 @@ class UnmodifiableUint8List extends Object with _UnmodifiableListMixin<int> impl
 
   @override
   noSuchMethod(Invocation invocation) => reflect(_underlyingUint8List).delegate(invocation);
-}
-
-
-
-
-
-// This code is taken from the dart:_internal library and is licensed
-//  under the same license as all Dart code.
-// Perhaps in the future, this class will be exposed in the dart:collection
-//  library: https://code.google.com/p/dart/issues/detail?id=11178
-/**
- * Mixin for an unmodifiable [List] class.
- *
- * This overrides all mutating methods with methods that throw.
- * This mixin is intended to be mixed in on top of [ListMixin] on
- * unmodifiable lists.
- */
-abstract class _UnmodifiableListMixin<E> implements List<E> {
 
   /** This operation is not supported by an unmodifiable list. */
   void operator []=(int index, E value) {
