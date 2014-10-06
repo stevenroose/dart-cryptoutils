@@ -72,9 +72,9 @@ class Base58CheckDecoder extends Converter<String, Base58CheckPayload> {
     if(bytes.length < 5)
       throw new FormatException("Invalid Base58Check encoded string: must be at least size 5");
     List<int> checksum = sha256(sha256(bytes.sublist(0, bytes.length - 4)));
-    if(validateChecksum && !new ListEquality().equals(bytes.getRange(bytes.length - 4, bytes.length), checksum.getRange(0, 4))) {
+    if(validateChecksum && !new ListEquality().equals(bytes.sublist(bytes.length - 4, bytes.length), checksum.sublist(0, 4))) {
       throw new FormatException("Invalid checksum in Base58Check encoding.");
     }
-    return new Base58CheckPayload(bytes[0], bytes.getRange(1, bytes.length - 4));
+    return new Base58CheckPayload(bytes[0], bytes.sublist(1, bytes.length - 4));
   }
 }
