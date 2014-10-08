@@ -26,115 +26,134 @@ class UnmodifiableUint8List implements Uint8List {
   noSuchMethod(Invocation invocation) => reflect(_underlyingUint8List).delegate(invocation);
 
   /** This operation is not supported by an unmodifiable list. */
-  void operator []=(int index, E value) {
+  @override
+  void operator []=(int index, int value) {
     throw new UnsupportedError(
         "Cannot modify an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
+  @override
   void set length(int newLength) {
     throw new UnsupportedError(
         "Cannot change the length of an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void setAll(int at, Iterable<E> iterable) {
+  @override
+  void setAll(int at, Iterable<int> iterable) {
     throw new UnsupportedError(
         "Cannot modify an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void add(E value) {
+  @override
+  void add(int value) {
     throw new UnsupportedError(
         "Cannot add to an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  E insert(int index, E value) {
+  @override
+  int insert(int index, int value) {
     throw new UnsupportedError(
         "Cannot add to an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void insertAll(int at, Iterable<E> iterable) {
+  @override
+  void insertAll(int at, Iterable<int> iterable) {
     throw new UnsupportedError(
         "Cannot add to an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void addAll(Iterable<E> iterable) {
+  @override
+  void addAll(Iterable<int> iterable) {
     throw new UnsupportedError(
         "Cannot add to an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
+  @override
   bool remove(Object element) {
     throw new UnsupportedError(
         "Cannot remove from an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void removeWhere(bool test(E element)) {
+  @override
+  void removeWhere(bool test(int element)) {
     throw new UnsupportedError(
         "Cannot remove from an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void retainWhere(bool test(E element)) {
+  @override
+  void retainWhere(bool test(int element)) {
     throw new UnsupportedError(
         "Cannot remove from an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void sort([Comparator<E> compare]) {
+  @override
+  void sort([Comparator<int> compare]) {
     throw new UnsupportedError(
         "Cannot modify an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void shuffle([Random random]) {
+  @override
+  void shuffle([var random]) {
     throw new UnsupportedError(
         "Cannot modify an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
+  @override
   void clear() {
     throw new UnsupportedError(
         "Cannot clear an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  E removeAt(int index) {
+  @override
+  int removeAt(int index) {
     throw new UnsupportedError(
         "Cannot remove from an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  E removeLast() {
+  @override
+  int removeLast() {
     throw new UnsupportedError(
         "Cannot remove from an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void setRange(int start, int end, Iterable<E> iterable, [int skipCount = 0]) {
+  @override
+  void setRange(int start, int end, Iterable<int> iterable, [int skipCount = 0]) {
     throw new UnsupportedError(
         "Cannot modify an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
+  @override
   void removeRange(int start, int end) {
     throw new UnsupportedError(
         "Cannot remove from an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void replaceRange(int start, int end, Iterable<E> iterable) {
+  @override
+  void replaceRange(int start, int end, Iterable<int> iterable) {
     throw new UnsupportedError(
         "Cannot remove from an unmodifiable list");
   }
 
   /** This operation is not supported by an unmodifiable list. */
-  void fillRange(int start, int end, [E fillValue]) {
+  @override
+  void fillRange(int start, int end, [int fillValue]) {
     throw new UnsupportedError(
         "Cannot modify an unmodifiable list");
   }
