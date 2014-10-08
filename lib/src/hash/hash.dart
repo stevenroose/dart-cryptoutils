@@ -5,7 +5,7 @@ part of cryptoutils;
  *
  * Constructors take either List<int>'s or Strings.
  */
-abstract class Hash implements Uint8List {
+abstract class Hash implements TypedData {
 
   /**
    * Create a new Hash instance.
@@ -14,8 +14,11 @@ abstract class Hash implements Uint8List {
 
   /**
    * The bytes that represent the hash value.
+   *
+   * This returns an unmodifiable version of this hash value,
+   * if you want to modify the bytes, use hash.buffer.asUint8List();
    */
-  List<int> asBytes();
+  Uint8List asBytes();
 
   /**
    * The hash value as a Big Integer.
@@ -25,7 +28,7 @@ abstract class Hash implements Uint8List {
   /**
    * Copy this hash value as a byte list.
    */
-  List<int> copyAsBytes();
+  Uint8List copyAsBytes();
 
   /**
    * Copy this hash value as a Big Integer.
@@ -63,10 +66,9 @@ abstract class Hash implements Uint8List {
   int get hashCode;
 }
 
-@proxy
 class _HashBase implements Hash  {
 
-  UnmodifiableUint8List _content;
+  Uint8List _content;
 
   _HashBase(dynamic content) {
     // convert
@@ -79,15 +81,17 @@ class _HashBase implements Hash  {
       _content = content;
     else if(content is Uint8List)
       _content = new UnmodifiableUint8List(content);
+    else if(content is TypedData)
+      _content = content.buffer.asUint8List(content.offsetInBytes, content.lengthInBytes);
     else
       _content = new UnmodifiableUint8List.fromList(content);
   }
 
   @override
-  List<int> asBytes() => _content;
+  List<int> asBytes() => new UnmodifiableUint8List(_content);
 
   @override
-  BigInteger asBigInteger() => new BigInteger.fromBytes(1, _content);
+  BigInteger asBigInteger() => new BigInteger.fromBytes(1, asBytes());
 
   @override
   List<int> copyAsBytes() => new Uint8List.fromList(_content);
@@ -101,8 +105,18 @@ class _HashBase implements Hash  {
   @override
   toJson() => toHex();
 
+  // TypedData
   @override
-  noSuchMethod(Invocation invocation) => reflect(_content).delegate(invocation);
+  ByteBuffer get buffer => _content.buffer;
+
+  @override
+  int get elementSizeInBytes => lengthInBytes;
+
+  @override
+  int get lengthInBytes => _content.lengthInBytes;
+
+  @override
+  int get offsetInBytes => _content.offsetInBytes;
 
   // Object methods
 
