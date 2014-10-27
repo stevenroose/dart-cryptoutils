@@ -13,10 +13,17 @@ abstract class Hash implements TypedData {
   factory Hash(dynamic content) => new _HashBase(content);
 
   /**
-   * The bytes that represent the hash value.
+   * Access the underlying bytes of the hash value.
+   *
+   * This is the default way to access the content of this hash value.
    *
    * This returns an unmodifiable version of this hash value,
    * if you want to modify the bytes, use hash.buffer.asUint8List();
+   */
+  Uint8List get bytes;
+
+  /**
+   * The bytes that represent the hash value. (Same as [bytes] getter.)
    */
   Uint8List asBytes();
 
@@ -68,7 +75,7 @@ abstract class Hash implements TypedData {
 
 class _HashBase implements Hash  {
 
-  Uint8List _content;
+  UnmodifiableUint8List _content;
 
   _HashBase(dynamic content) {
     // convert
@@ -82,13 +89,16 @@ class _HashBase implements Hash  {
     else if(content is Uint8List)
       _content = new UnmodifiableUint8List(content);
     else if(content is TypedData)
-      _content = content.buffer.asUint8List(content.offsetInBytes, content.lengthInBytes);
+      _content = new UnmodifiableUint8List.fromList(content.buffer.asUint8List(content.offsetInBytes, content.lengthInBytes));
     else
       _content = new UnmodifiableUint8List.fromList(content);
   }
 
   @override
-  List<int> asBytes() => new UnmodifiableUint8List(_content);
+  Uint8List get bytes => _content;
+
+  @override
+  List<int> asBytes() => bytes;
 
   @override
   BigInteger asBigInteger() => new BigInteger.fromBytes(1, asBytes());
