@@ -8,3 +8,4 @@ dependencies:
   collection: '>=1.0.0 <1.1.0'
 dev_dependencies:
   unittest: any
+  crypto: any

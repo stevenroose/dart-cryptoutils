@@ -78,3 +78,5 @@ class Base58CheckDecoder extends Converter<String, Base58CheckPayload> {
     return new Base58CheckPayload(bytes[0], bytes.sublist(1, bytes.length - 4));
   }
 }
+
+//TODO consider making VersionedBase58heckCodec<List<int>, String>
