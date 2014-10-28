@@ -8,8 +8,8 @@ If you have other crypto-related code you don't want to duplicate, feel free to 
 
 Currently it includes:
  - all the methods `CryptoUtils` from `package:crypto`
- - a Codec (including separate encoder and decoder classes) for the following encidings:
-   - base65
+ - a Codec (including separate encoder and decoder classes) for the following encidongs:
+   - base64
    - base58
    - [Base58Check](https://en.bitcoin.it/wiki/Base58Check_encoding)
  - an abstract class `Hash` and several fixed-sized hash classes, `Hash128`, `Hash160`, `Hash256`, `Hash512`
