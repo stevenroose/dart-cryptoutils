@@ -5,6 +5,11 @@ class Base58CheckPayload {
   final int version;
   final List<int> payload;
   const Base58CheckPayload(int this.version, List<int> this.payload);
+  @override
+  bool operator ==(Object other) => other is Base58CheckPayload &&
+      version == other.version && const ListEquality().equals(payload, other.payload);
+  @override
+  int get hashCode => version.hashCode ^ const ListEquality().hash(payload);
 }
 
 /**
