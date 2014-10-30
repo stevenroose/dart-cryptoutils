@@ -134,8 +134,8 @@ class _HashBase implements Hash  {
   String toString() => toHex();
 
   @override
-  bool operator ==(Object other) => other is! Hash ? false :
-      new ListEquality().equals(_content, (other as Hash).asBytes());
+  bool operator ==(Object other) => other is Hash &&
+      new ListEquality().equals(_content, other.bytes);
 
   @override
   int get hashCode {
