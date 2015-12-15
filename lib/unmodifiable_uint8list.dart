@@ -4,7 +4,7 @@ import "dart:typed_data";
 
 import "package:zengen/zengen.dart";
 
-part "unmodifiable_uint8list.g.dart";
+part "src/unmodifiable_uint8list.g.dart";
 
 
 /**
