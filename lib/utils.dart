@@ -1,11 +1,8 @@
+library cryptoutils.utils;
 
-// For the original Dart code, following license holds. For all other code, see the LICENSE file in this repo.
-//    Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
-//    for details. All rights reserved. Use of this source code is governed by a
-//    BSD-style license that can be found in the LICENSE file of the Dart source repository.
+import "dart:typed_data";
 
-part of cryptoutils;
-
+import "package:cryptoutils/encoding/base64.dart";
 
 abstract class CryptoUtils {
 

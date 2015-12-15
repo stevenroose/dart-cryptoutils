@@ -6,6 +6,9 @@ homepage: https://github.com/stevenroose/dart-cryptoutils
 dependencies:
   bignum: ">=0.0.4 <0.1.0"
   collection: ">=1.1.1 <2.0.0"
+  zengen: "^0.3.0"
+
 dev_dependencies:
-  unittest: any
   crypto: any
+  source_gen: any
+  unittest: any

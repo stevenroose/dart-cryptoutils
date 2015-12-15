@@ -1,5 +1,7 @@
-part of cryptoutils;
+library cryptoutils.base64;
 
+import "dart:convert";
+import "dart:typed_data";
 
 
 class Base64Codec extends Codec<List<int>, String> {

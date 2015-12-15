@@ -1,4 +1,7 @@
-part of cryptoutils;
+library cryptoutils.base58;
+
+import "dart:convert";
+import "dart:typed_data";
 
 
 /**

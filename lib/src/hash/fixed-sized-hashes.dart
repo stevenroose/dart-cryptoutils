@@ -1,4 +1,5 @@
-part of cryptoutils;
+part of cryptoutils.hash;
+
 
 class _FixedSizeHash extends _HashBase {
 

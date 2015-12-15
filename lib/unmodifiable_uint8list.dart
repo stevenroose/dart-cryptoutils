@@ -1,4 +1,10 @@
-part of cryptoutils;
+library cryptoutils.unmodifiable_uint8list;
+
+import "dart:typed_data";
+
+import "package:zengen/zengen.dart";
+
+part "unmodifiable_uint8list.g.dart";
 
 
 /**
@@ -6,24 +12,22 @@ part of cryptoutils;
  *
  * All methods that can modify the list will throw an [UnsupportedError].
  */
-class UnmodifiableUint8List implements Uint8List {
+class _UnmodifiableUint8List {
 
+  @Delegate()
   final Uint8List _underlyingUint8List;
 
   /**
    * Create a new unmodifiable wrapper around a [Uint8List].
    */
-  UnmodifiableUint8List(Uint8List this._underlyingUint8List);
+  _UnmodifiableUint8List(Uint8List this._underlyingUint8List);
 
   /**
    * Instead of just wrapping the object, this factory constructor first
    * makes a full copy of the [Uint8List].
    */
-  factory UnmodifiableUint8List.fromList(List<int> uint8listToCopy) =>
-      new UnmodifiableUint8List(new Uint8List.fromList(uint8listToCopy));
-
-  @override
-  noSuchMethod(Invocation invocation) => reflect(_underlyingUint8List).delegate(invocation);
+  _UnmodifiableUint8List.fromList(List<int> uint8listToCopy) :
+      this(new Uint8List.fromList(uint8listToCopy));
 
   /** This operation is not supported by an unmodifiable list. */
   @override

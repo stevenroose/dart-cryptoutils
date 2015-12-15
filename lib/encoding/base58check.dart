@@ -1,4 +1,11 @@
-part of cryptoutils;
+library cryptoutils.base58check;
+
+import "dart:convert";
+import "dart:typed_data";
+
+import "package:collection/equality.dart" show ListEquality;
+
+import "package:cryptoutils/encoding/base58.dart";
 
 
 class Base58CheckPayload {

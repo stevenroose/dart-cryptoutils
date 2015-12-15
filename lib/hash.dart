@@ -1,4 +1,14 @@
-part of cryptoutils;
+library cryptoutils.hash;
+
+import "dart:typed_data";
+
+import "package:bignum/bignum.dart";
+import "package:collection/equality.dart" show ListEquality;
+
+import "package:cryptoutils/utils.dart";
+import "package:cryptoutils/unmodifiable_uint8list.dart";
+
+part "src/hash/fixed-sized-hashes.dart";
 
 /**
  * Data object to represent a hash value.
