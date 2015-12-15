@@ -7,7 +7,7 @@ import "package:bignum/bignum.dart";
 
 void _testBigInteger() {
   Hash160 hash = new Hash160(BigInteger.ONE);
-  expect(hash.length, equals(20));
+  expect(hash.lengthInBytes, equals(20));
 }
 
 void main() {
