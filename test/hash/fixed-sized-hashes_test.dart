@@ -1,6 +1,6 @@
 library cryptoutils.test.fixedsizedhashes;
 
-import "package:unittest/unittest.dart";
+import "package:test/test.dart";
 
 import "package:cryptoutils/cryptoutils.dart";
 import "package:bignum/bignum.dart";

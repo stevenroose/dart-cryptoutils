@@ -3,20 +3,19 @@ library cryptoutils.base64;
 import "dart:convert";
 import "dart:typed_data";
 
-
 class Base64Codec extends Codec<List<int>, String> {
-
   final bool urlSafe;
   final bool addLineSeparator;
 
-  const Base64Codec([bool this.urlSafe = false, bool this.addLineSeparator = false]);
+  const Base64Codec(
+      [bool this.urlSafe = false, bool this.addLineSeparator = false]);
 
   @override
-  Converter<List<int>, String> get encoder => new Base64Encoder(urlSafe, addLineSeparator);
+  Converter<List<int>, String> get encoder =>
+      new Base64Encoder(urlSafe, addLineSeparator);
 
   @override
   Converter<String, List<int>> get decoder => new Base64Decoder();
-
 }
 
 /**
@@ -34,18 +33,20 @@ class Base64Codec extends Codec<List<int>, String> {
  *
  */
 class Base64Encoder extends Converter<List<int>, String> {
-
   final bool urlSafe;
   final bool addLineSeparator;
 
-  const Base64Encoder([bool this.urlSafe = false, bool this.addLineSeparator = false]);
+  const Base64Encoder(
+      [bool this.urlSafe = false, bool this.addLineSeparator = false]);
 
   static const int _PAD = 61; // '='
-  static const int _CR = 13;  // '\r'
-  static const int _LF = 10;  // '\n'
+  static const int _CR = 13; // '\r'
+  static const int _LF = 10; // '\n'
   static const int _BASE64_LINE_LENGTH = 76;
-  static const String _encodeTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  static const String _encodeTableUrlSafe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  static const String _encodeTable =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  static const String _encodeTableUrlSafe =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
   @override
   String convert(List<int> bytes) {
@@ -68,7 +69,9 @@ class Base64Encoder extends Converter<List<int>, String> {
     // Encode 24 bit chunks.
     int j = 0, i = 0, c = 0;
     while (i < chunkLength) {
-      int x = ((bytes[i++] << 16) & 0xFFFFFF) | ((bytes[i++] << 8) & 0xFFFFFF) | bytes[i++];
+      int x = ((bytes[i++] << 16) & 0xFFFFFF) |
+          ((bytes[i++] << 8) & 0xFFFFFF) |
+          bytes[i++];
       out[j++] = lookup.codeUnitAt(x >> 18);
       out[j++] = lookup.codeUnitAt((x >> 12) & 0x3F);
       out[j++] = lookup.codeUnitAt((x >> 6) & 0x3F);
@@ -114,7 +117,6 @@ class Base64Encoder extends Converter<List<int>, String> {
  * Based on [RFC 4648](http://tools.ietf.org/html/rfc4648)
  */
 class Base64Decoder extends Converter<String, List<int>> {
-
   const Base64Decoder();
 
   // Lookup table used for finding Base 64 alphabet index of a given byte.
@@ -122,23 +124,264 @@ class Base64Decoder extends Converter<String, List<int>> {
   // -1 : '\r' or '\n'
   //  0 : = (Padding character).
   // >0 : Base 64 alphabet index of given byte.
-  static const List<int> _decodeTable =
-      const [ -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -2, -2, -1, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 62, -2, 62, -2, 63,
-              52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -2, -2, -2,  0, -2, -2,
-              -2,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
-              15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -2, -2, -2, -2, 63,
-              -2, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-              41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-              -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2 ];
+  static const List<int> _decodeTable = const [
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -1,
+    -2,
+    -2,
+    -1,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    62,
+    -2,
+    62,
+    -2,
+    63,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    -2,
+    -2,
+    -2,
+    0,
+    -2,
+    -2,
+    -2,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    -2,
+    -2,
+    -2,
+    -2,
+    63,
+    -2,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2,
+    -2
+  ];
   static const int _PAD = 61; // '='
 
   @override
@@ -176,10 +419,10 @@ class Base64Decoder extends Converter<String, List<int>> {
     int outputLen = (((len - extrasLen) * 6) >> 3) - padLength;
     List<int> out = new Uint8List(outputLen);
 
-    for (int i = 0, o = 0; o < outputLen; ) {
+    for (int i = 0, o = 0; o < outputLen;) {
       // Accumulate 4 valid 6 bit Base 64 characters into an int.
       int x = 0;
-      for (int j = 4; j > 0; ) {
+      for (int j = 4; j > 0;) {
         int c = _decodeTable[input.codeUnitAt(i++)];
         if (c >= 0) {
           x = ((x << 6) & 0xFFFFFF) | c;
@@ -201,12 +444,11 @@ class Base64Decoder extends Converter<String, List<int>> {
    */
   static int _divmod256(List<int> number58, int startAt) {
     int remaining = 0;
-    for(int i = startAt ; i < number58.length ; i++) {
+    for (int i = startAt; i < number58.length; i++) {
       int num = 58 * remaining + (number58[i] & 0xFF);
       number58[i] = num ~/ 256;
       remaining = num % 256;
     }
     return remaining;
   }
-
 }

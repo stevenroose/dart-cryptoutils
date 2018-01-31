@@ -3,10 +3,9 @@ library cryptoutils.hash;
 import "dart:typed_data";
 
 import "package:bignum/bignum.dart";
-import "package:collection/equality.dart" show ListEquality;
+import "package:collection/collection.dart" show ListEquality;
 
 import "package:cryptoutils/utils.dart";
-import "package:cryptoutils/unmodifiable_uint8list.dart";
 
 part "src/hash/fixed-sized-hashes.dart";
 
@@ -16,7 +15,6 @@ part "src/hash/fixed-sized-hashes.dart";
  * Constructors take either List<int>'s or Strings.
  */
 abstract class Hash implements TypedData {
-
   /**
    * Create a new Hash instance.
    */
@@ -83,38 +81,34 @@ abstract class Hash implements TypedData {
   int get hashCode;
 }
 
-class _HashBase implements Hash  {
-
-  UnmodifiableUint8List _content;
+class _HashBase implements Hash {
+  Uint8List _content;
 
   _HashBase(dynamic content) {
     // convert
-    if(content is String)
+    if (content is String)
       content = CryptoUtils.hexToBytes(content);
-    else if(content is BigInteger)
+    else if (content is BigInteger)
       content = content.toByteArray();
-    // make immutable
-    if(content is UnmodifiableUint8List)
-      _content = content;
-    else if(content is Uint8List)
-      _content = new UnmodifiableUint8List(content);
-    else if(content is TypedData)
-      _content = new UnmodifiableUint8List.fromList(content.buffer.asUint8List(content.offsetInBytes, content.lengthInBytes));
+    // store as bytes
+    if (content is TypedData)
+      _content = new Uint8List.fromList(content.buffer
+          .asUint8List(content.offsetInBytes, content.lengthInBytes));
     else
-      _content = new UnmodifiableUint8List.fromList(content);
+      _content = new Uint8List.fromList(content);
   }
 
   @override
   Uint8List get bytes => _content;
 
   @override
-  List<int> asBytes() => bytes;
+  Uint8List asBytes() => bytes;
 
   @override
   BigInteger asBigInteger() => new BigInteger.fromBytes(1, asBytes());
 
   @override
-  List<int> copyAsBytes() => new Uint8List.fromList(_content);
+  Uint8List copyAsBytes() => new Uint8List.fromList(_content);
 
   @override
   BigInteger copyAsBigInteger() => new BigInteger.fromBytes(1, copyAsBytes());
@@ -144,12 +138,15 @@ class _HashBase implements Hash  {
   String toString() => toHex();
 
   @override
-  bool operator ==(Object other) => other is Hash &&
-      new ListEquality().equals(_content, other.bytes);
+  bool operator ==(Object other) =>
+      other is Hash && new ListEquality().equals(_content, other.bytes);
 
   @override
   int get hashCode {
-    if(_content.length < 4) return new ListEquality().hash(_content);
-    return _content[_content.length-1] ^ (_content[_content.length-2] << 8) ^ (_content[_content.length-3] << 16) ^ (_content[_content.length-4] << 24);
+    if (_content.length < 4) return new ListEquality().hash(_content);
+    return _content[_content.length - 1] ^
+        (_content[_content.length - 2] << 8) ^
+        (_content[_content.length - 3] << 16) ^
+        (_content[_content.length - 4] << 24);
   }
 }
