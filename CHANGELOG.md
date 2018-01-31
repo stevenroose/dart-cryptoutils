@@ -1,6 +1,11 @@
 Changelog
 =========
 
+# 0.3.0
+
+ - Remove base58(check) codec because it is in package:base58check
+ - Remove UnmodifiableUint8List (remove zengen dependency)
+
 # 0.2.1
 
  - Updated bignum dependency to v0.1.0
