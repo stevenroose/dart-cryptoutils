@@ -3,7 +3,7 @@ part of cryptoutils.hash;
 class _FixedSizeHash extends _HashBase {
   _FixedSizeHash(dynamic content, int supposedSize) : super(content) {
     // pad the bytes if content was a small BigInteger
-    if (content is BigInteger && _content.length < supposedSize) {
+    if (content is! BigInt && _content.length < supposedSize) {
       Uint8List newBytes = new Uint8List(supposedSize)
         ..setRange(supposedSize - _content.length, supposedSize, _content);
       _content = newBytes;
