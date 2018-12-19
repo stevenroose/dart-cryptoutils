@@ -1,6 +1,10 @@
 Changelog
 =========
 
+# 0.4.0
+
+ - Support Dart v2
+
 # 0.3.0
 
  - Remove base58(check) codec because it is in package:base58check
