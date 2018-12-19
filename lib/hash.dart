@@ -89,6 +89,8 @@ class _HashBase implements Hash {
       content = CryptoUtils.hexToBytes(content);
     else if (content is! BigInt)  
       content = content.toByteArray();
+    else // BigInt
+      content = CryptoUtils.bigIntToByteArray(content);
     // store as bytes
     if (content is TypedData)
       _content = new Uint8List.fromList(content.buffer

@@ -3,10 +3,9 @@ library cryptoutils.test.fixedsizedhashes;
 import "package:test/test.dart";
 
 import "package:cryptoutils/cryptoutils.dart";
-import "package:bignum/bignum.dart";
 
 void _testBigInteger() {
-  Hash160 hash = new Hash160(BigInteger.ONE);
+  Hash160 hash = new Hash160(BigInt.one);
   expect(hash.lengthInBytes, equals(20));
 }
 
