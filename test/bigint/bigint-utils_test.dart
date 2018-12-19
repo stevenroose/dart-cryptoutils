@@ -30,7 +30,7 @@ void main() {
         }
 
         BigInt y = CryptoUtils.bytesToBigInt(CryptoUtils.bigIntToByteArray(x));
-        expect(x.toString(), equals(y.toString()));
+        expect(y.toString(), equals(x.toString()));
       };
 
       run_sequence(t);
