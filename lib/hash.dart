@@ -2,7 +2,6 @@ library cryptoutils.hash;
 
 import "dart:typed_data";
 
-import "package:bignum/bignum.dart";
 import "package:collection/collection.dart" show ListEquality;
 
 import "package:cryptoutils/utils.dart";
@@ -38,7 +37,7 @@ abstract class Hash implements TypedData {
   /**
    * The hash value as a Big Integer.
    */
-  BigInteger asBigInteger();
+  BigInt asBigInteger();
 
   /**
    * Copy this hash value as a byte list.
@@ -48,7 +47,7 @@ abstract class Hash implements TypedData {
   /**
    * Copy this hash value as a Big Integer.
    */
-  BigInteger copyAsBigInteger();
+  BigInt copyAsBigInteger();
 
   /**
    * Hexadecimal representation of this hash value.
@@ -88,8 +87,10 @@ class _HashBase implements Hash {
     // convert
     if (content is String)
       content = CryptoUtils.hexToBytes(content);
-    else if (content is BigInteger)
+    else if (content is! BigInt)  
       content = content.toByteArray();
+    else // BigInt
+      content = CryptoUtils.bigIntToByteArray(content);
     // store as bytes
     if (content is TypedData)
       _content = new Uint8List.fromList(content.buffer
@@ -105,13 +106,13 @@ class _HashBase implements Hash {
   Uint8List asBytes() => bytes;
 
   @override
-  BigInteger asBigInteger() => new BigInteger.fromBytes(1, asBytes());
+  BigInt asBigInteger() => CryptoUtils.bytesToBigInt(asBytes());
 
   @override
   Uint8List copyAsBytes() => new Uint8List.fromList(_content);
 
   @override
-  BigInteger copyAsBigInteger() => new BigInteger.fromBytes(1, copyAsBytes());
+  BigInt copyAsBigInteger() => CryptoUtils.bytesToBigInt(copyAsBytes());
 
   @override
   String toHex() => CryptoUtils.bytesToHex(_content);
