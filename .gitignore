@@ -24,3 +24,4 @@ docs/
 
 .pub/
 *.g.dart
+.dart_tool
