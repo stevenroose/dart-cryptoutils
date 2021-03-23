@@ -3,8 +3,7 @@ library cryptoutils.hash;
 import "dart:typed_data";
 
 import "package:collection/collection.dart" show ListEquality;
-
-import "package:cryptoutils/utils.dart";
+import 'package:cryptoutils/utils.dart';
 
 part "src/hash/fixed-sized-hashes.dart";
 
@@ -81,22 +80,24 @@ abstract class Hash implements TypedData {
 }
 
 class _HashBase implements Hash {
-  Uint8List _content;
+  late Uint8List _content;
 
   _HashBase(dynamic content) {
     // convert
-    if (content is String)
+    if (content is String) {
       content = CryptoUtils.hexToBytes(content);
-    else if (content is! BigInt)  
+    } else if (content is! BigInt) {
       content = content.toByteArray();
-    else // BigInt
+    } else {
       content = CryptoUtils.bigIntToByteArray(content);
+    }
     // store as bytes
-    if (content is TypedData)
+    if (content is TypedData) {
       _content = new Uint8List.fromList(content.buffer
           .asUint8List(content.offsetInBytes, content.lengthInBytes));
-    else
+    } else {
       _content = new Uint8List.fromList(content);
+    }
   }
 
   @override

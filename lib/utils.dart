@@ -74,7 +74,7 @@ abstract class CryptoUtils {
    * Based on [RFC 4648](http://tools.ietf.org/html/rfc4648)
    */
   static Uint8List base64StringToBytes(String input) =>
-      new Base64Decoder().convert(input);
+      Base64Decoder().convert(input);
 
   static BigInt bytesToBigInt(List s) {
     if (s == null || s.length == 0) {
@@ -106,7 +106,7 @@ abstract class CryptoUtils {
 
     int blen = (len + 1) ~/ 2;
     int boff = 0;
-    List bytes;
+    List<int> bytes;
     if (neg) {
       if (len & 1 == 1) {
         p = -1;
@@ -115,11 +115,11 @@ abstract class CryptoUtils {
       if (byte0 < -128) byte0 += 256;
       if (byte0 >= 0) {
         boff = 1;
-        bytes = new List<int>(blen + 1);
+        bytes = List.filled(blen + 1, 0);
         bytes[0] = -1;
         bytes[1] = byte0;
       } else {
-        bytes = new List<int>(blen);
+        bytes = List.filled(blen, 0);
         bytes[0] = byte0;
       }
       for (int i = 1; i < blen; ++i) {
@@ -136,16 +136,16 @@ abstract class CryptoUtils {
       if (byte0 > 127) byte0 -= 256;
       if (byte0 < 0) {
         boff = 1;
-        bytes = new List<int>(blen + 1);
+        bytes = List.filled(blen + 1, 0);
         bytes[0] = 0;
         bytes[1] = byte0;
       } else {
-        bytes = new List<int>(blen);
+        bytes = List.filled(blen, 0);
         bytes[0] = byte0;
       }
       for (int i = 1; i < blen; ++i) {
         int byte =
-        int.parse(str.substring(p + (i << 1), p + (i << 1) + 2), radix: 16);
+            int.parse(str.substring(p + (i << 1), p + (i << 1) + 2), radix: 16);
         if (byte > 127) byte -= 256;
         bytes[i + boff] = byte;
       }

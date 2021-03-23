@@ -52,7 +52,7 @@ class Base64Encoder extends Converter<List<int>, String> {
   String convert(List<int> bytes) {
     int len = bytes.length;
     if (len == 0) {
-      return "";
+      return '';
     }
     final String lookup = urlSafe ? _encodeTableUrlSafe : _encodeTable;
     // Size of 24 bit chunks.
@@ -64,7 +64,7 @@ class Base64Encoder extends Converter<List<int>, String> {
     if (addLineSeparator) {
       outputLen += ((outputLen - 1) ~/ _BASE64_LINE_LENGTH) << 1;
     }
-    List<int> out = new List<int>(outputLen);
+    List<int> out = List.filled(outputLen, 0);
 
     // Encode 24 bit chunks.
     int j = 0, i = 0, c = 0;
@@ -124,7 +124,7 @@ class Base64Decoder extends Converter<String, List<int>> {
   // -1 : '\r' or '\n'
   //  0 : = (Padding character).
   // >0 : Base 64 alphabet index of given byte.
-  static const List<int> _decodeTable = const [
+  static const List<int> _decodeTable = [
     -2,
     -2,
     -2,
@@ -385,10 +385,10 @@ class Base64Decoder extends Converter<String, List<int>> {
   static const int _PAD = 61; // '='
 
   @override
-  List<int> convert(String input) {
+  Uint8List convert(String input) {
     int len = input.length;
     if (len == 0) {
-      return new List<int>(0);
+      return Uint8List(0);
     }
 
     // Count '\r', '\n' and illegal characters, For illegal characters,
@@ -417,7 +417,7 @@ class Base64Decoder extends Converter<String, List<int>> {
       if (currentCodeUnit == _PAD) padLength++;
     }
     int outputLen = (((len - extrasLen) * 6) >> 3) - padLength;
-    List<int> out = new Uint8List(outputLen);
+    var out = new Uint8List(outputLen);
 
     for (int i = 0, o = 0; o < outputLen;) {
       // Accumulate 4 valid 6 bit Base 64 characters into an int.
