@@ -1,6 +1,11 @@
 Changelog
 =========
 
+# 0.5.0
+
+- Support nullsafe
+- Bump required Dart version to 2.12.0+
+
 # 0.4.0
 
  - Support Dart v2
