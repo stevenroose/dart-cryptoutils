@@ -12,7 +12,7 @@ part "src/hash/fixed-sized-hashes.dart";
  *
  * Constructors take either List<int>'s or Strings.
  */
-abstract class Hash implements TypedData {
+abstract class Hash {
   /**
    * Create a new Hash instance.
    */
